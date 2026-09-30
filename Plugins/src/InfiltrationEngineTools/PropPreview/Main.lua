@@ -14,6 +14,11 @@ NoModelBase.Parent = NoModelPlaceholder
 NoModelBase.Transparency = 1
 NoModelBase.Size = Vector3.new(0.2, 0.2, 0.2)
 
+local RefreshAttributes = {
+	"AltPropModel",
+	"DoubleDoor", "DifficultDrill", "DifficultLock", "NoKick",
+}
+
 local module = {}
 
 local ColorMap = {}
@@ -170,7 +175,36 @@ function module:AddProp(basePart)
 			p.Archivable = false
 		end
 	end
-	
+	if basePart:GetAttribute("DifficultLock") and not noPropModel then
+		local handle = model.Handle
+		if handle and handle:IsA("BasePart") then
+			handle.Material = Enum.Material.DiamondPlate
+		end
+	end
+	if basePart:GetAttribute("DifficultDrill") and not noPropModel then
+		for i, v in model:GetDescendants() do
+			if v:IsA("BasePart") then
+				v.Material = Enum.Material.DiamondPlate
+			end
+		end
+	end
+	if basePart:GetAttribute("NoKick") and not noPropModel then
+		local KickPart = Instance.new("Part")
+		KickPart.Archivable = false
+		KickPart.Anchored = true
+		KickPart.Color = Color3.fromRGB(91, 93, 105)
+		KickPart.Material = Enum.Material.DiamondPlate
+		KickPart.Parent = model
+		KickPart.Orientation = model.Base.Orientation
+		if basePart.Name:find("DoorWood") then
+			KickPart.Size = Vector3.new(1, 6.4, 0.331)
+			KickPart.Position = model.Base.Position + Vector3.new(0, 0, -1.7)
+		else
+			KickPart.Size = Vector3.new(4.4, 1.6, 0.31)
+			KickPart.Position = model.Base.Position + Vector3.new(0, -2.45, 0)
+		end
+		
+	end
 	if basePart:GetAttribute("DoubleDoor") and not noPropModel then
 		local baseInverse = model.Base.CFrame:Inverse()
 		local leftShift = model.Base.CFrame * CFrame.Angles(0, math.pi, 0) * CFrame.new(2.5, 0, 0) * baseInverse
@@ -188,7 +222,7 @@ function module:AddProp(basePart)
 			left.Archivable = false
 		end
 	end
-
+	
 	Prop[basePart] = {
 		Model = model,
 		Events = {
@@ -197,7 +231,7 @@ function module:AddProp(basePart)
 			end),
 			basePart.AttributeChanged:Connect(function(attribute)
 				model.Parent = self.World
-				if attribute == "AltPropModel" or attribute == "DoubleDoor" then
+				if table.find(RefreshAttributes, attribute) then
 					self:RemoveProp(basePart)
 					self:AddProp(basePart)
 					return
