@@ -1,5 +1,5 @@
 local VisibilityToggle = require(script.Parent.Parent.Util.VisibilityToggle)
-local sections = { "Barrier", "Cells", "Nodes", "LoudSpawns", "CombatFlowMap" }
+local sections = { "Barrier", "Cells", "Nodes", "LoudSpawns", "CombatFlowMap", "MapData", "TerrainBounds"}
 
 local cache = {}
 
