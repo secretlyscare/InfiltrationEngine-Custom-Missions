@@ -1630,6 +1630,13 @@ return {
 		MatchValue = {AttributeType.EXPRESSION, nil},
 		ResolvePriority = {AttributeType.INT, nil},
 	},
+	PartCollection = {
+		ShuffleTarget = {AttributeType.STRING, ""},
+		MatchVariable = {AttributeType.STATE_VALUE, ""},
+		MatchValue = {AttributeType.EXPRESSION, nil},
+		ResolvePriority = {AttributeType.INT, nil},
+		CollectionEnabled = {AttributeType.EXPRESSION, nil},
+	},
 	SoundSource = {
 		SoundId = {AttributeType.EXPRESSION, "0"},
 		Volume = {AttributeType.NUMBER, 0.5},
