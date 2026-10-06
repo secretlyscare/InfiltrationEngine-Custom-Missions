@@ -53,8 +53,8 @@ local function createModel(self)
 	local Back = addPart(model, self.Base.CFrame, Vector3.zero, self.Base.Size)
 	local Decal = addPart(model, self.Base.CFrame, Vector3.zero, Vector3.new(
 			self.Base.Size.X + .001,
-			self.Base.Size.Y - .4,
-			self.Base.Size.Z - .4
+			self.Base.Size.Y - .3,
+			self.Base.Size.Z - .3
 		))
 	local Image = evalTexture(self)
 	Back.Name = "Part0"
