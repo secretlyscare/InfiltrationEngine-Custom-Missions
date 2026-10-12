@@ -16,7 +16,7 @@ NoModelBase.Size = Vector3.new(0.2, 0.2, 0.2)
 
 local RefreshAttributes = {
 	"AltPropModel",
-	"DoubleDoor", "DifficultDrill", "DifficultLock", "NoKick",
+	"DoubleDoor", "DifficultDrill", "DifficultLock", "NoKick", "HighSecurityMaglock",
 }
 
 local module = {}
@@ -175,10 +175,16 @@ function module:AddProp(basePart)
 			p.Archivable = false
 		end
 	end
-	if basePart:GetAttribute("DifficultLock") and not noPropModel then
+	if basePart:GetAttribute("DifficultLock") and not noPropModel and model:FindFirstChild("Handle") then
 		local handle = model.Handle
 		if handle and handle:IsA("BasePart") then
 			handle.Material = Enum.Material.DiamondPlate
+		end
+	end
+	if basePart:GetAttribute("HighSecurityMaglock") and not noPropModel and model:FindFirstChild("Maglock") then
+		local maglock = model.Maglock
+		if maglock and maglock:IsA("BasePart") then
+			maglock.Material = Enum.Material.DiamondPlate
 		end
 	end
 	if basePart:GetAttribute("DifficultDrill") and not noPropModel then
