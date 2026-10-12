@@ -17,6 +17,7 @@ NoModelBase.Size = Vector3.new(0.2, 0.2, 0.2)
 local RefreshAttributes = {
 	"AltPropModel",
 	"DoubleDoor", "DifficultDrill", "DifficultLock", "NoKick", "HighSecurityMaglock",
+	"DesktopBackground", "DesktopTransparency",
 }
 
 local module = {}
@@ -227,6 +228,12 @@ function module:AddProp(basePart)
 			p.Archivable = false
 			left.Archivable = false
 		end
+	end
+	if basePart:GetAttribute("DesktopBackground") and basePart.Name:find("Monitor") then
+		local bg = model.Screen.Display.Background:: ImageLabel
+		model.Screen.Display.Overlay.BackgroundTransparency = 1
+		bg.Image = basePart:GetAttribute("DesktopBackground")
+		bg.ImageTransparency = basePart:GetAttribute("DesktopTransparency") or 0
 	end
 	
 	Prop[basePart] = {
