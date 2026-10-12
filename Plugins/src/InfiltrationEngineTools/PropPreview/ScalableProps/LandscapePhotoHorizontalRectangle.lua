@@ -9,7 +9,7 @@ local photos = {
 	10995583089,
 	10995584930,
 }
-local function evalTexture(self)
+local function evalTexture(self, XOffset)
 	local name = self.Base.Name
 	local Image
 	if name == "LandscapePhotoSquare" then
@@ -20,9 +20,10 @@ local function evalTexture(self)
 		Image.OffsetStudsV = .6
 		Image.StudsPerTileU = 5
 		Image.StudsPerTileV = 5
+		Image.UVOffset = Vector2.new(self.Base:GetAttribute("OffsetX") or 0, 0)
 	else
-		Image = Instance.new("Texture")
-		Image.OffsetStudsU = 0
+		Image = Instance.new("Texture"):: Texture
+		Image.OffsetStudsU = (self.Base:GetAttribute("OffsetX") or 0) * XOffset
 		Image.OffsetStudsV = 0
 		Image.StudsPerTileU = 6
 		Image.StudsPerTileV = 6
@@ -56,7 +57,7 @@ local function createModel(self)
 			self.Base.Size.Y - .3,
 			self.Base.Size.Z - .3
 		))
-	local Image = evalTexture(self)
+	local Image = evalTexture(self, Decal.Size.Z)
 	Back.Name = "Part0"
 	Back.Color = Color3.fromRGB(27, 42, 53)
 	Decal.Color = Color3.fromRGB(27, 42, 53)
